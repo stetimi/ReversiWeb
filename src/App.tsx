@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Board from './components/Board';
 
 const App: React.FC = () => {
   const [board, setBoard] = useState(() =>
@@ -23,39 +24,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(8, 60px)',
-      gap: '2px',
-      backgroundColor: '#2d582d',
-      padding: '10px',
-      borderRadius: '8px'
-    }}>
-      {board.map((row, rowIndex) =>
-        row.map((cell, colIndex) => (
-          <div
-            key={`${rowIndex}-${colIndex}`}
-            onClick={() => handleCellClick(rowIndex, colIndex)}
-            style={{
-              width: '60px',
-              height: '60px',
-              backgroundColor: '#4a752d',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            {cell && <div style={{
-              width: '45px',
-              height: '45px',
-              borderRadius: '50%',
-              backgroundColor: cell === 'black' ? '#333' : '#fff'
-            }} />}
-          </div>
-        ))
-      )}
-    </div>
+    <Board board={board} onCellClick={handleCellClick} />
   );
 };
 

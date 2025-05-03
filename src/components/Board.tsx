@@ -1,5 +1,11 @@
 import React from 'react';
 import '../styles/Board.css';
+import { BoardType } from '../model';
+
+interface BoardProps {
+  board: BoardType;
+  onCellClick: (row: number, col: number) => void;
+}
 
 const Board: React.FC<BoardProps> = ({ board, onCellClick }) => {
   return (
@@ -15,7 +21,7 @@ const Board: React.FC<BoardProps> = ({ board, onCellClick }) => {
               width: '45px',
               height: '45px',
               borderRadius: '50%',
-              backgroundColor: cell === 'black' ? '#333' : '#fff'
+              backgroundColor: cell === 'b' ? '#333' : '#fff'
             }} />}
           </div>
         ))

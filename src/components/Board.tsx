@@ -8,6 +8,8 @@ interface BoardProps {
 }
 
 const Board: React.FC<BoardProps> = ({ board, onCellClick }) => {
+  const [hoveredCell, setHoveredCell] = React.useState<[number, number] | null>(null);
+  
   return (
       <div className="board-container">
         {board.map((row, rowIndex) =>
@@ -15,7 +17,9 @@ const Board: React.FC<BoardProps> = ({ board, onCellClick }) => {
             <div
               key={`${rowIndex}-${colIndex}`}
               onClick={() => onCellClick(rowIndex, colIndex)}
-              className="board-cell"
+              onMouseEnter={() => setHoveredCell([rowIndex, colIndex])}
+              onMouseLeave={() => setHoveredCell(null)}
+              className={`board-cell ${hoveredCell?.[0] === rowIndex && hoveredCell?.[1] === colIndex ? 'hovered' : ''}`}
             >
               {cell && <div style={{
                 width: '45px',

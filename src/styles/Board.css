@@ -19,6 +19,11 @@
   align-items: center;
 }
 
+.board-cell.hovered {
+  background-color: #5a8d32;
+  transition: background-color 0.2s ease;
+}
+
 .board-white-piece {
   width: 45px;
   height: 45px;

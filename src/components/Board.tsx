@@ -9,7 +9,6 @@ interface BoardProps {
 
 const Board: React.FC<BoardProps> = ({ board, onCellClick }) => {
   return (
-    <div className="main-container">
       <div className="board-container">
         {board.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
@@ -28,11 +27,6 @@ const Board: React.FC<BoardProps> = ({ board, onCellClick }) => {
           ))
         )}
       </div>
-      <div className="players-container">
-        <div className="player-info player-left">Player 1</div>
-        <div className="player-info player-right">Player 2</div>
-      </div>
-    </div>
   );
 };
 

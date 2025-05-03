@@ -25,7 +25,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <Board board={board} onCellClick={handleCellClick} />
+    <div className="main-container">
+      <Board board={board} onCellClick={handleCellClick} />
+      <div className="players-container">
+        <div className="player-info player-left">Player 1</div>
+        <div className="player-info player-right">Player 2</div>
+      </div>
+    </div>
   );
 };
 

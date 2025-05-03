@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Board from './components/Board';
+import { Player } from './components/Player'; 
 import { BoardType, Piece } from './model';
 
 const App: React.FC = () => {
@@ -28,8 +29,8 @@ const App: React.FC = () => {
     <div className="main-container">
       <Board board={board} onCellClick={handleCellClick} />
       <div className="players-container">
-        <div className="player-info player-left">Player 1</div>
-        <div className="player-info player-right">Player 2</div>
+        <Player piece="b" score={0} isActive={currentPlayer === 'b'} />
+        <Player piece="w" score={0} isActive={currentPlayer === 'w'} />
       </div>
     </div>
   );

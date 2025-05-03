@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Board from './components/Board';
 import { Player } from './components/Player'; 
-import { Piece, newBoard } from './model';
+import { newBoard } from './board';
+import { Piece } from './model';
 
 const App: React.FC = () => {
   const [board, setBoard] = useState(() => newBoard());

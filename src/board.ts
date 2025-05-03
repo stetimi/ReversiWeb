@@ -1,6 +1,4 @@
-export type Piece = 'b' | 'w';
-export type Cell = Piece | null;
-export type BoardType = Cell[][];
+import { BoardType, Cell, Position } from "./model";
 
 export function newBoard(): BoardType {
   const board = Array(8)
@@ -11,4 +9,10 @@ export function newBoard(): BoardType {
   board[4][3] = 'b';
   board[4][4] = 'w';
   return board;
+}
+
+export function cellAt(b: BoardType, position: Position): Cell {
+  const row = Math.floor(position / 8);
+  const col = position % 8;
+  return b[row][col];
 }

@@ -1,4 +1,4 @@
-import { newBoard } from '../src/model';
+import { newBoard } from '../src/board';
 
 describe('newBoard', () => {
   it('creates 8x8 board', () => {

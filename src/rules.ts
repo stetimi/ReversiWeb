@@ -1,0 +1,2 @@
+import { BoardType } from "./model";
+

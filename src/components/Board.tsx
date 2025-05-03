@@ -9,23 +9,29 @@ interface BoardProps {
 
 const Board: React.FC<BoardProps> = ({ board, onCellClick }) => {
   return (
-    <div className="board-container">
-      {board.map((row, rowIndex) =>
-        row.map((cell, colIndex) => (
-          <div
-            key={`${rowIndex}-${colIndex}`}
-            onClick={() => onCellClick(rowIndex, colIndex)}
-            className="board-cell"
-          >
-            {cell && <div style={{
-              width: '45px',
-              height: '45px',
-              borderRadius: '50%',
-              backgroundColor: cell === 'b' ? '#333' : '#fff'
-            }} />}
-          </div>
-        ))
-      )}
+    <div className="main-container">
+      <div className="board-container">
+        {board.map((row, rowIndex) =>
+          row.map((cell, colIndex) => (
+            <div
+              key={`${rowIndex}-${colIndex}`}
+              onClick={() => onCellClick(rowIndex, colIndex)}
+              className="board-cell"
+            >
+              {cell && <div style={{
+                width: '45px',
+                height: '45px',
+                borderRadius: '50%',
+                backgroundColor: cell === 'b' ? '#333' : '#fff'
+              }} />}
+            </div>
+          ))
+        )}
+      </div>
+      <div className="players-container">
+        <div className="player-info player-left">Player 1</div>
+        <div className="player-info player-right">Player 2</div>
+      </div>
     </div>
   );
 };

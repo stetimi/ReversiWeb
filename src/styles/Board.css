@@ -32,3 +32,43 @@
   border-radius: 50%;
   background-color: '#333';
 }
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.players-container {
+  display: flex;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.player-info {
+  padding: 10px 20px;
+  border: 2px solid #333;
+  border-radius: 8px;
+  font-weight: bold;
+  position: relative;
+}
+
+.player-left {
+  background-color: #f0f0f0;
+  margin-right: auto;
+}
+
+.player-right {
+  background-color: #333;
+  color: white;
+  margin-left: auto;
+}
+
+.player-left {
+  background-color: #f0f0f0;
+}
+
+.player-right {
+  background-color: #333;
+  color: white;
+}

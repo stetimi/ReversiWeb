@@ -16,3 +16,7 @@ export function cellAt(b: BoardType, position: Position): Cell {
   const col = position % 8;
   return b[row][col];
 }
+
+export function position(row: number, col: number): Position {
+  return row * 8 + col;
+}

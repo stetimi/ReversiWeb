@@ -55,3 +55,4 @@ export function checkMove(
   return flipped.length > 0 ? { position, piece, flipped } : null;
 }
 
+

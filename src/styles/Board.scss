@@ -1,6 +1,9 @@
+// Board colors
 $board-green: #2d582d;
 $cell-green: #4a752d;
 $hover-green: #5a8d32;
+$piece-white: #fff;
+$piece-black: #333;
 
 .board-container {
   display: grid;
@@ -28,18 +31,20 @@ $hover-green: #5a8d32;
   }
 }
 
-.board-white-piece {
+@mixin piece-styles {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: #fff;
+}
+
+.board-white-piece {
+  @include piece-styles;
+  background-color: $piece-white;
 }
 
 .board-black-piece {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background-color: #333;
+  @include piece-styles;
+  background-color: $piece-black;
 }
 
 .main-container {

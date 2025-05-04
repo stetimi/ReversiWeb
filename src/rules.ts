@@ -1,4 +1,4 @@
-import { BoardType, Piece, Position, MoveResult } from './model';
+import { BoardType, Piece, Position, MoveResult, Scores } from './model';
 import { cellAt } from './board';
 
 const DIRECTIONS = [
@@ -69,7 +69,7 @@ export function applyMove(board: BoardType, move: MoveResult): BoardType {
   return newBoard;
 }
 
-export function scores(board: BoardType): { black: number; white: number } {
+export function scores(board: BoardType): Scores {
   let black = 0;
   let white = 0;
 

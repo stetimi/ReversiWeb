@@ -8,3 +8,8 @@ export type MoveResult = {
   piece: Piece;
   flipped: Position[];
 };
+
+export type Scores = {
+  black: number;
+  white: number;
+};

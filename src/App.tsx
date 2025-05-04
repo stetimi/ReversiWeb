@@ -3,11 +3,12 @@ import Board from './components/Board';
 import { Player } from './components/Player';
 import { newBoard, position } from './board';
 import { Piece } from './model';
-import { applyMove, checkMove } from './rules';
+import { applyMove, checkMove, scores } from './rules';
 
 const App: React.FC = () => {
   const [board, setBoard] = useState(() => newBoard());
   const [currentPlayer, setCurrentPlayer] = useState<Piece>('b');
+  const playerScores = scores(board);
 
   const handleCellClick = (row: number, col: number) => {
     const moveResult = checkMove(board, currentPlayer, position(row, col));
@@ -25,8 +26,8 @@ const App: React.FC = () => {
     <div className="main-container">
       <Board board={board} onCellClick={handleCellClick} highlightOnHover={highlightOnHover} />
       <div className="players-container">
-        <Player piece="b" score={0} isActive={currentPlayer === 'b'} />
-        <Player piece="w" score={0} isActive={currentPlayer === 'w'} />
+        <Player piece="b" score={playerScores.black} isActive={currentPlayer === 'b'} />
+        <Player piece="w" score={playerScores.white} isActive={currentPlayer === 'w'} />
       </div>
     </div>
   );

@@ -10,10 +10,7 @@ export interface PlayerProps {
 
 export const Player: React.FC<PlayerProps> = ({ piece, score, isActive }) => {
   const playerClass = piece === 'b' ? 'player-left' : 'player-right';
-  const playerName = `Player ${piece === 'b' ? '1' : '2'}`;
   return (
-    <div className={`player-info ${playerClass} ${isActive ? 'active-player' : ''}`}>
-      {playerName}
-    </div>
+    <div className={`player-info ${playerClass} ${isActive ? 'active-player' : ''}`}>{score}</div>
   );
 };

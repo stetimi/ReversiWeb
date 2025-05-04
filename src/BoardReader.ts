@@ -18,9 +18,3 @@ export function parseBoard(boardStrings: string[]): BoardType {
     });
   });
 }
-
-export function serializeBoard(board: BoardType): string[] {
-  return board.map(row => 
-    row.map(cell => cell ? cell.toUpperCase() : 'X').join('')
-  );
-}

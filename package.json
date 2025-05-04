@@ -4,7 +4,7 @@
   "homepage": "https://stetimi.github.io/ReversiWeb",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "compile": "tsc --noEmit --pretty --noErrorTruncation",
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",

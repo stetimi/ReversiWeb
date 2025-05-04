@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Board.css';
+import '../styles/Board.scss';
 import { Piece } from '../model';
 
 export interface PlayerProps {

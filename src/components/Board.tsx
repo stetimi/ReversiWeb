@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Board.css';
+import '../styles/Board.scss';
 import { BoardType } from '../model';
 
 interface BoardProps {

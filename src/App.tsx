@@ -9,6 +9,7 @@ const App: React.FC = () => {
   const [board, setBoard] = useState(() => newBoard());
   const [currentPlayer, setCurrentPlayer] = useState<Piece>('b');
   const playerScores = scores(board);
+  const history = [];
 
   const handleCellClick = (row: number, col: number) => {
     const moveResult = checkMove(board, currentPlayer, position(row, col));
@@ -27,6 +28,15 @@ const App: React.FC = () => {
       <Board board={board} onCellClick={handleCellClick} highlightOnHover={highlightOnHover} />
       <div className="players-container">
         <Player piece="b" score={playerScores.black} isActive={currentPlayer === 'b'} />
+        <div className="controls-container">
+          <div className="controls-row">
+            <button className="control-button">New Game</button>
+          </div>
+          <div className="controls-row">
+            <button className="control-button">◀</button>
+            <button className="control-button">▶</button>
+          </div>
+        </div>
         <Player piece="w" score={playerScores.white} isActive={currentPlayer === 'w'} />
       </div>
     </div>

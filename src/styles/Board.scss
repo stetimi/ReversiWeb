@@ -62,7 +62,7 @@ $piece-black: #333;
 
 .player-info {
   padding: 10px 20px;
-  border: 2px solid #333;
+  border: 1px solid #333;
   border-radius: 8px;
   font-weight: bold;
   position: relative;
@@ -78,4 +78,9 @@ $piece-black: #333;
     color: black;
     margin-left: auto;
   }
+}
+
+.active-player {
+  border: 5px solid $cell-green;
+  box-sizing: border-box;
 }

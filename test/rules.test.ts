@@ -1,5 +1,5 @@
-import { checkMove } from '../src/rules';
-import { BoardType } from '../src/model';
+import { checkMove, applyMove } from '../src/rules';
+import { BoardType, MoveResult, Piece } from '../src/model';
 import { newBoard, position } from '../src/board';
 import { parseBoard } from '../src/BoardReader';
 
@@ -27,13 +27,13 @@ describe('checkMove', () => {
       '........',
       '........',
       '........'
-    ]);
+      ]);
+      
+      const result = checkMove(board, 'w', position(3, 7));
+      expect(numberSort(result!.flipped)).toEqual([position(3, 4), position(3, 5), position(3, 6)]);
+    });
     
-    const result = checkMove(board, 'w', position(3, 7));
-    expect(numberSort(result!.flipped)).toEqual([position(3, 4), position(3, 5), position(3, 6)]);
-  });
-
-  test('should validate multi-direction flips', () => {
+    test('should validate multi-direction flips', () => {
     board = parseBoard([
       '........',
       '.B...B..',
@@ -65,5 +65,33 @@ describe('checkMove', () => {
     
     const result = checkMove(board, 'b', position(3, 0));
     expect(numberSort(result!.flipped)).toEqual([position(1, 0), position(2, 0)]);
+  });
+});
+
+describe('applyMove', () => {
+  test('should apply move and flip pieces', () => {
+    const initialBoard = parseBoard([
+      '........',
+      '........',
+      '........',
+      '.BWWWB..',
+      '........',
+      '........',
+      '........',
+      '........'
+    ]);
+
+    const move: MoveResult = {
+      position: position(3, 0),
+      piece: 'w' as const,
+      flipped: [position(3, 1), position(3, 2), position(3, 3)]
+    };
+
+    const newBoard = applyMove(initialBoard, move);
+
+    expect(newBoard[3][0]).toBe('w');
+    expect(newBoard[3][1]).toBe('w');
+    expect(newBoard[3][2]).toBe('w');
+    expect(newBoard[3][3]).toBe('w');
   });
 });

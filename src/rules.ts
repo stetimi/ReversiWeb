@@ -51,8 +51,26 @@ export function checkMove(
       col += dCol;
     }
   }
+return flipped.length > 0 ? { position, piece, flipped } : null;
+}
 
-  return flipped.length > 0 ? { position, piece, flipped } : null;
+export function applyMove(board: BoardType, move: MoveResult): BoardType {
+// Create deep copy of board
+const newBoard = board.map(row => [...row]);
+
+// Place new piece
+const row = Math.floor(move.position / 8);
+const col = move.position % 8;
+newBoard[row][col] = move.piece;
+
+// Flip captured pieces
+move.flipped.forEach(pos => {
+  const flipRow = Math.floor(pos / 8);
+  const flipCol = pos % 8;
+  newBoard[flipRow][flipCol] = move.piece;
+});
+
+return newBoard;
 }
 
 

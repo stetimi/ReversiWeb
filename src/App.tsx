@@ -19,13 +19,18 @@ const App: React.FC = () => {
     }
   };
 
+  const newGame = () => {
+    setBoard(newBoard());
+    setCurrentPlayer('b');
+  };
+
   const highlightOnHover = (row: number, col: number) =>
     checkMove(board, currentPlayer, position(row, col)) !== null;
 
   return (
     <div className="main-container">
       <Board board={board} onCellClick={handleCellClick} highlightOnHover={highlightOnHover} />
-      <Controls scores={playerScores} currentPlayer={currentPlayer} />
+      <Controls scores={playerScores} currentPlayer={currentPlayer} onNewGame={newGame} />
     </div>
   );
 };

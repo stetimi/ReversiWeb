@@ -5,15 +5,18 @@ import { Player } from './Player';
 interface ControlsProps {
   scores: Scores;
   currentPlayer: Piece;
+  onNewGame: () => void;
 }
 
-export const Controls: React.FC<ControlsProps> = ({ scores, currentPlayer }) => {
+export const Controls: React.FC<ControlsProps> = ({ scores, currentPlayer, onNewGame }) => {
   return (
     <div className="players-container">
       <Player piece="b" score={scores.black} isActive={currentPlayer === 'b'} />
       <div className="controls-container">
         <div className="controls-row">
-          <button className="control-button">New Game</button>
+          <button className="control-button" onClick={onNewGame}>
+            New Game
+          </button>
         </div>
         <div className="controls-row">
           <button className="control-button">◀</button>

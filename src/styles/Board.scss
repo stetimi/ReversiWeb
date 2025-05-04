@@ -55,7 +55,7 @@ $piece-black: #333;
 
   .players-container {
     display: flex;
-    width: 600px;
+    width: 510px;
     margin: 0 auto;
   }
 }
@@ -68,13 +68,14 @@ $piece-black: #333;
   position: relative;
 
   &.player-left {
-    background-color: #f0f0f0;
+    background-color: #333;
+    color: white;
     margin-right: auto;
   }
 
   &.player-right {
-    background-color: #333;
-    color: white;
+    background-color: #f0f0f0;
+    color: black;
     margin-left: auto;
   }
 }

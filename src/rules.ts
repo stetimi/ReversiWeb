@@ -1,22 +1,18 @@
-import { BoardType, Piece, Position, MoveResult } from "./model";
-import { cellAt } from "./board";
+import { BoardType, Piece, Position, MoveResult } from './model';
+import { cellAt } from './board';
 
 const DIRECTIONS = [
   [-1, 0], // up
-  [1, 0],  // down
+  [1, 0], // down
   [0, -1], // left
-  [0, 1],  // right
+  [0, 1], // right
   [-1, -1], // up-left
-  [-1, 1],  // up-right
-  [1, -1],  // down-left
-  [1, 1],   // down-right
+  [-1, 1], // up-right
+  [1, -1], // down-left
+  [1, 1], // down-right
 ];
 
-export function checkMove(
-  board: BoardType,
-  piece: Piece,
-  position: Position
-): MoveResult | null {
+export function checkMove(board: BoardType, piece: Piece, position: Position): MoveResult | null {
   const currentCell = cellAt(board, position);
   if (currentCell !== null) {
     return null;
@@ -51,26 +47,24 @@ export function checkMove(
       col += dCol;
     }
   }
-return flipped.length > 0 ? { position, piece, flipped } : null;
+  return flipped.length > 0 ? { position, piece, flipped } : null;
 }
 
 export function applyMove(board: BoardType, move: MoveResult): BoardType {
-// Create deep copy of board
-const newBoard = board.map(row => [...row]);
+  // Create deep copy of board
+  const newBoard = board.map((row) => [...row]);
 
-// Place new piece
-const row = Math.floor(move.position / 8);
-const col = move.position % 8;
-newBoard[row][col] = move.piece;
+  // Place new piece
+  const row = Math.floor(move.position / 8);
+  const col = move.position % 8;
+  newBoard[row][col] = move.piece;
 
-// Flip captured pieces
-move.flipped.forEach(pos => {
-  const flipRow = Math.floor(pos / 8);
-  const flipCol = pos % 8;
-  newBoard[flipRow][flipCol] = move.piece;
-});
+  // Flip captured pieces
+  move.flipped.forEach((pos) => {
+    const flipRow = Math.floor(pos / 8);
+    const flipCol = pos % 8;
+    newBoard[flipRow][flipCol] = move.piece;
+  });
 
-return newBoard;
+  return newBoard;
 }
-
-

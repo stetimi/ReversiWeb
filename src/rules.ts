@@ -68,3 +68,17 @@ export function applyMove(board: BoardType, move: MoveResult): BoardType {
 
   return newBoard;
 }
+
+export function scores(board: BoardType): { black: number; white: number } {
+  let black = 0;
+  let white = 0;
+
+  for (const row of board) {
+    for (const cell of row) {
+      if (cell === 'b') black++;
+      if (cell === 'w') white++;
+    }
+  }
+
+  return { black, white };
+}

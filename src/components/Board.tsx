@@ -32,19 +32,18 @@ const Board: React.FC<BoardProps> = ({ board, onCellClick, highlightOnHover }) =
             {cell &&
               (cell === 'b' ? (
                 <img
-                  src="/assets/black.png"
+                  src="/assets/skins/waxy/black.png"
                   style={{
                     width: '45px',
                     height: '45px',
                   }}
                 />
               ) : (
-                <div
+                <img
+                  src="/assets/skins/waxy/white.png"
                   style={{
                     width: '45px',
                     height: '45px',
-                    borderRadius: '50%',
-                    backgroundColor: '#fff',
                   }}
                 />
               ))}

@@ -11,6 +11,16 @@ export interface PlayerProps {
 export const Player: React.FC<PlayerProps> = ({ piece, score, isActive }) => {
   const playerClass = piece === 'b' ? 'player-left' : 'player-right';
   return (
-    <div className={`player-info ${playerClass} ${isActive ? 'active-player' : ''}`}>{score}</div>
+    <div
+      className={`player-info ${playerClass} ${isActive ? 'active-player' : ''}`}
+      style={{
+        fontSize: '2em',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {score}
+    </div>
   );
 };

@@ -25,7 +25,7 @@ const Cell: React.FC<CellProps> = ({ key, cell, skin, onCellClick, highlightOnHo
       const colour = cell === 'b' ? 'black' : 'white';
       return (
         <img
-          src={`/assets/skins/${skin}/${colour}.png`}
+          src={`assets/skins/${skin}/${colour}.png`}
           alt="{colour}"
           style={{
             width: '45px',

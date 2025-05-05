@@ -7,6 +7,7 @@
     "deploy": "gh-pages -d dist",
     "compile": "tsc --noEmit --pretty --noErrorTruncation",
     "start": "webpack serve --mode development",
+    "serve": "webpack serve --mode production --open",
     "build": "webpack --mode production",
     "test": "jest",
     "prepare": "husky install"

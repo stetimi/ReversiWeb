@@ -6,9 +6,10 @@ export interface PlayerProps {
   piece: Piece;
   score: number;
   isActive: boolean;
+  onClick: () => void;
 }
 
-export const Player: React.FC<PlayerProps> = ({ piece, score, isActive }) => {
+export const Player: React.FC<PlayerProps> = ({ piece, score, isActive, onClick }) => {
   const playerClass = piece === 'b' ? 'player-left' : 'player-right';
   return (
     <div
@@ -19,6 +20,7 @@ export const Player: React.FC<PlayerProps> = ({ piece, score, isActive }) => {
         alignItems: 'center',
         justifyContent: 'center',
       }}
+      onClick={onClick}
     >
       {score}
     </div>

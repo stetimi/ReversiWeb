@@ -6,12 +6,23 @@ interface ControlsProps {
   scores: Scores;
   currentPlayer: Piece;
   onNewGame: () => void;
+  onClickPlayer: () => void;
 }
 
-export const Controls: React.FC<ControlsProps> = ({ scores, currentPlayer, onNewGame }) => {
+export const Controls: React.FC<ControlsProps> = ({
+  scores,
+  currentPlayer,
+  onNewGame,
+  onClickPlayer,
+}) => {
   return (
     <div className="players-container">
-      <Player piece="b" score={scores.black} isActive={currentPlayer === 'b'} />
+      <Player
+        piece="b"
+        score={scores.black}
+        isActive={currentPlayer === 'b'}
+        onClick={onClickPlayer}
+      />
       <div className="controls-container">
         <div className="controls-row">
           <button className="control-button" onClick={onNewGame}>
@@ -23,7 +34,12 @@ export const Controls: React.FC<ControlsProps> = ({ scores, currentPlayer, onNew
           <button className="control-button">▶</button>
         </div>
       </div>
-      <Player piece="w" score={scores.white} isActive={currentPlayer === 'w'} />
+      <Player
+        piece="w"
+        score={scores.white}
+        isActive={currentPlayer === 'w'}
+        onClick={onClickPlayer}
+      />
     </div>
   );
 };

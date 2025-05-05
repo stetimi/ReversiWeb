@@ -14,31 +14,44 @@ const Board: React.FC<BoardProps> = ({ board, onCellClick, highlightOnHover }) =
     if (hoveredCell?.[0] === row && hoveredCell?.[1] === col && highlightOnHover(row, col)) {
       return 'hovered';
     } else {
-      return "";
+      return '';
     }
   };
 
   return (
-      <div className="board-container">
-        {board.map((row, rowIndex) =>
-          row.map((cell, colIndex) => (
-            <div
-              key={`${rowIndex}-${colIndex}`}
-              onClick={() => onCellClick(rowIndex, colIndex)}
-              onMouseEnter={() => setHoveredCell([rowIndex, colIndex])}
-              onMouseLeave={() => setHoveredCell(null)}
-              className={`board-cell ${showHighlight(rowIndex, colIndex)}`}
-            >
-              {cell && <div style={{
-                width: '45px',
-                height: '45px',
-                borderRadius: '50%',
-                backgroundColor: cell === 'b' ? '#333' : '#fff'
-              }} />}
-            </div>
-          ))
-        )}
-      </div>
+    <div className="board-container">
+      {board.map((row, rowIndex) =>
+        row.map((cell, colIndex) => (
+          <div
+            key={`${rowIndex}-${colIndex}`}
+            onClick={() => onCellClick(rowIndex, colIndex)}
+            onMouseEnter={() => setHoveredCell([rowIndex, colIndex])}
+            onMouseLeave={() => setHoveredCell(null)}
+            className={`board-cell ${showHighlight(rowIndex, colIndex)}`}
+          >
+            {cell &&
+              (cell === 'b' ? (
+                <img
+                  src="/assets/black.png"
+                  style={{
+                    width: '45px',
+                    height: '45px',
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    width: '45px',
+                    height: '45px',
+                    borderRadius: '50%',
+                    backgroundColor: '#fff',
+                  }}
+                />
+              ))}
+          </div>
+        )),
+      )}
+    </div>
   );
 };
 

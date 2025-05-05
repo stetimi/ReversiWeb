@@ -13,3 +13,8 @@ export type Scores = {
   black: number;
   white: number;
 };
+
+export interface History {
+  boards: BoardType[];
+  current: number;
+}

@@ -18,6 +18,23 @@ const Cell: React.FC<CellProps> = ({ key, cell, skin, onCellClick, highlightOnHo
       return '';
     }
   };
+  const cellDiv = (cell: CellType) => {
+    if (cell === null) {
+      return null;
+    } else {
+      const colour = cell === 'b' ? 'black' : 'white';
+      return (
+        <img
+          src={`/assets/skins/${skin}/${colour}.png`}
+          alt="{colour}"
+          style={{
+            width: '45px',
+            height: '45px',
+          }}
+        />
+      );
+    }
+  };
   return (
     <div
       key={key}
@@ -26,24 +43,7 @@ const Cell: React.FC<CellProps> = ({ key, cell, skin, onCellClick, highlightOnHo
       onMouseLeave={() => setHoveredCell(false)}
       className={`board-cell ${showHighlight()}`}
     >
-      {cell &&
-        (cell === 'b' ? (
-          <img
-            src={`/assets/skins/${skin}/black.png`}
-            style={{
-              width: '45px',
-              height: '45px',
-            }}
-          />
-        ) : (
-          <img
-            src={`/assets/skins/${skin}/white.png`}
-            style={{
-              width: '45px',
-              height: '45px',
-            }}
-          />
-        ))}
+      {cellDiv(cell)}
     </div>
   );
 };

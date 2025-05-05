@@ -1,4 +1,4 @@
-import { BoardType, Cell, Position } from "./model";
+import { BoardType, CellType, Position } from './model';
 
 export function newBoard(): BoardType {
   const board = Array(8)
@@ -11,7 +11,7 @@ export function newBoard(): BoardType {
   return board;
 }
 
-export function cellAt(b: BoardType, position: Position): Cell {
+export function cellAt(b: BoardType, position: Position): CellType {
   const row = Math.floor(position / 8);
   const col = position % 8;
   return b[row][col];

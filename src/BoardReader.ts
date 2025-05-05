@@ -1,4 +1,4 @@
-import { BoardType, Cell } from "./model";
+import { BoardType, CellType } from './model';
 
 const BOARD_SIZE = 8;
 
@@ -11,8 +11,8 @@ export function parseBoard(boardStrings: string[]): BoardType {
     if (rowStr.length !== BOARD_SIZE) {
       throw new Error(`Row ${row} has invalid length ${rowStr.length}`);
     }
-    
-    return rowStr.split('').map((char, col): Cell => {
+
+    return rowStr.split('').map((char, col): CellType => {
       const lowerChar = char.toLowerCase();
       return lowerChar === 'b' ? 'b' : lowerChar === 'w' ? 'w' : null;
     });

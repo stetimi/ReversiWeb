@@ -1,6 +1,6 @@
 export type Piece = 'b' | 'w';
-export type Cell = Piece | null;
-export type BoardType = Cell[][];
+export type CellType = Piece | null;
+export type BoardType = CellType[][];
 export type Position = number;
 
 export type MoveResult = {

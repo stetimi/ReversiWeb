@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/Board.scss';
 import { BoardType } from '../model';
+import Cell from './Cell';
+import { position } from '../board';
 
 interface BoardProps {
   board: BoardType;
@@ -9,45 +11,17 @@ interface BoardProps {
 }
 
 const Board: React.FC<BoardProps> = ({ board, onCellClick, highlightOnHover }) => {
-  const [hoveredCell, setHoveredCell] = React.useState<[number, number] | null>(null);
-  const showHighlight = (row: number, col: number) => {
-    if (hoveredCell?.[0] === row && hoveredCell?.[1] === col && highlightOnHover(row, col)) {
-      return 'hovered';
-    } else {
-      return '';
-    }
-  };
-
   return (
     <div className="board-container">
       {board.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
-          <div
-            key={`${rowIndex}-${colIndex}`}
-            onClick={() => onCellClick(rowIndex, colIndex)}
-            onMouseEnter={() => setHoveredCell([rowIndex, colIndex])}
-            onMouseLeave={() => setHoveredCell(null)}
-            className={`board-cell ${showHighlight(rowIndex, colIndex)}`}
-          >
-            {cell &&
-              (cell === 'b' ? (
-                <img
-                  src="/assets/skins/waxy/black.png"
-                  style={{
-                    width: '45px',
-                    height: '45px',
-                  }}
-                />
-              ) : (
-                <img
-                  src="/assets/skins/waxy/white.png"
-                  style={{
-                    width: '45px',
-                    height: '45px',
-                  }}
-                />
-              ))}
-          </div>
+          <Cell
+            key={position(rowIndex, colIndex)}
+            cell={cell}
+            skin="waxy"
+            onCellClick={() => onCellClick(rowIndex, colIndex)}
+            highlightOnHover={highlightOnHover(rowIndex, colIndex)}
+          />
         )),
       )}
     </div>

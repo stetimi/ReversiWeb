@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Board from './components/Board';
-import { Controls } from './components/Controls';
-import { newBoard, position } from './board';
-import { Piece } from './model';
-import { applyMove, checkMove, scores } from './rules';
+import Board from './Board';
+import { Controls } from './Controls';
+import { newBoard, position } from '../board';
+import { Piece } from '../model';
+import { applyMove, checkMove, scores } from '../rules';
 
 const SKINS = ['waxy', 'stripy', 'scribble'];
 

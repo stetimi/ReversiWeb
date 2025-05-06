@@ -74,6 +74,10 @@ $piece-black: #333;
         border-radius: 4px;
         cursor: pointer;
         transition: background 0.2s;
+        &:disabled {
+          background: darkgray;
+          cursor: not-allowed;
+        }
 
         &:hover {
           background: #34495e;

@@ -4,21 +4,26 @@ import { Controls } from './Controls';
 import { newBoard, position } from '../board';
 import { Piece } from '../model';
 import { applyMove, checkMove, scores } from '../rules';
+import { back, canGoBack, newHistory, current, addEntry, canGoForward, forward } from '../history';
 
 const SKINS = ['waxy', 'stripy', 'scribble'];
 
 const App: React.FC = () => {
-  const [board, setBoard] = useState(() => newBoard());
+  const initialBoard = newBoard();
   const [skin, setSkin] = useState(0);
   const [currentPlayer, setCurrentPlayer] = useState<Piece>('b');
-  const playerScores = scores(board);
+  const playerScores = scores(initialBoard);
+  const [history, setHistory] = useState(newHistory(initialBoard));
 
   const handleCellClick = (row: number, col: number) => {
+    const board = current(history).board;
     const moveResult = checkMove(board, currentPlayer, position(row, col));
     if (moveResult) {
       const newBoard = applyMove(board, moveResult);
-      setBoard(newBoard);
-      setCurrentPlayer(currentPlayer === 'b' ? 'w' : 'b');
+      const nextPlayer = currentPlayer === 'b' ? 'w' : 'b';
+      setCurrentPlayer(nextPlayer);
+      const updatedHistory = addEntry(history, { board: newBoard, player: nextPlayer });
+      setHistory(updatedHistory);
     }
   };
 
@@ -27,17 +32,35 @@ const App: React.FC = () => {
   };
 
   const newGame = () => {
-    setBoard(newBoard());
     setCurrentPlayer('b');
+    setHistory(newHistory(initialBoard));
   };
 
   const highlightOnHover = (row: number, col: number) =>
-    checkMove(board, currentPlayer, position(row, col)) !== null;
+    checkMove(current(history).board, currentPlayer, position(row, col)) !== null;
+
+  const onClickBack = () => {
+    if (canGoBack(history)) {
+      const updatedHistory = back(history);
+      const currentEntry = current(updatedHistory);
+      setCurrentPlayer(currentEntry.player);
+      setHistory(updatedHistory);
+    }
+  };
+
+  const onClickForward = () => {
+    if (canGoForward(history)) {
+      const updatedHistory = forward(history);
+      const currentEntry = current(updatedHistory);
+      setCurrentPlayer(currentEntry.player);
+      setHistory(updatedHistory);
+    }
+  };
 
   return (
     <div className="main-container">
       <Board
-        board={board}
+        board={current(history).board}
         onCellClick={handleCellClick}
         highlightOnHover={highlightOnHover}
         skin={SKINS[skin]}
@@ -47,6 +70,10 @@ const App: React.FC = () => {
         currentPlayer={currentPlayer}
         onNewGame={newGame}
         onClickPlayer={onClickPlayer}
+        onClickBack={onClickBack}
+        onClickForward={onClickForward}
+        canClickBack={canGoBack(history)}
+        canClickForward={canGoForward(history)}
       />
     </div>
   );

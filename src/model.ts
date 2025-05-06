@@ -4,17 +4,22 @@ export type BoardType = CellType[][];
 export type Position = number;
 
 export type MoveResult = {
-  position: Position;
-  piece: Piece;
-  flipped: Position[];
+  readonly position: Position;
+  readonly piece: Piece;
+  readonly flipped: ReadonlyArray<Position>;
 };
 
 export type Scores = {
-  black: number;
-  white: number;
+  readonly black: number;
+  readonly white: number;
 };
 
+export interface HistoryEntry {
+  readonly board: BoardType;
+  readonly player: Piece;
+}
+
 export interface History {
-  boards: (BoardType | null)[];
-  current: number;
+  readonly entries: ReadonlyArray<HistoryEntry | null>;
+  readonly current: number;
 }

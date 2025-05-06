@@ -7,6 +7,10 @@ interface ControlsProps {
   currentPlayer: Piece;
   onNewGame: () => void;
   onClickPlayer: () => void;
+  onClickBack: () => void;
+  onClickForward: () => void;
+  canClickBack: boolean;
+  canClickForward: boolean;
 }
 
 export const Controls: React.FC<ControlsProps> = ({
@@ -14,6 +18,10 @@ export const Controls: React.FC<ControlsProps> = ({
   currentPlayer,
   onNewGame,
   onClickPlayer,
+  onClickBack,
+  onClickForward,
+  canClickBack,
+  canClickForward,
 }) => {
   return (
     <div className="players-container">
@@ -30,8 +38,12 @@ export const Controls: React.FC<ControlsProps> = ({
           </button>
         </div>
         <div className="controls-row">
-          <button className="control-button">◀</button>
-          <button className="control-button">▶</button>
+          <button className="control-button" onClick={onClickBack} disabled={!canClickBack}>
+            ◀
+          </button>
+          <button className="control-button" onClick={onClickForward} disabled={!canClickForward}>
+            ▶
+          </button>
         </div>
       </div>
       <Player

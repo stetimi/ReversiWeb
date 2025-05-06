@@ -3,7 +3,7 @@ import { BoardType, MoveResult, Piece } from '../src/model';
 import { newBoard, position } from '../src/board';
 import { parseBoard } from '../src/BoardReader';
 
-const numberSort = (xs: number[]): number[] => xs.slice().sort((a, b) => a - b);
+const numberSort = (xs: ReadonlyArray<number>): number[] => xs.slice().sort((a, b) => a - b);
 
 describe('checkMove', () => {
   let board: BoardType;
@@ -29,8 +29,8 @@ describe('checkMove', () => {
       '........',
     ]);
 
-    const result = checkMove(board, 'w', position(3, 7));
-    expect(numberSort(result!.flipped)).toEqual([position(3, 4), position(3, 5), position(3, 6)]);
+    const result = checkMove(board, 'w', position(3, 7))!;
+    expect(numberSort(result.flipped)).toEqual([position(3, 4), position(3, 5), position(3, 6)]);
   });
 
   test('should validate multi-direction flips', () => {

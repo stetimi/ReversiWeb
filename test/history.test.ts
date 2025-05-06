@@ -1,4 +1,12 @@
-import { newHistory, back, forward } from '../src/history';
+import {
+  newHistory,
+  back,
+  forward,
+  current,
+  canGoBack,
+  canGoForward,
+  addBoard,
+} from '../src/history';
 import { BoardType, History, CellType } from '../src/model';
 
 // Mock board states
@@ -66,6 +74,80 @@ describe('History Management', () => {
       };
 
       expect(() => forward(history)).toThrow('No next board state');
+    });
+  });
+
+  describe('current()', () => {
+    it('should return current board state', () => {
+      const history: History = {
+        boards: [initialBoard, secondBoard, thirdBoard],
+        current: 1,
+      };
+      expect(current(history)).toBe(secondBoard);
+    });
+  });
+
+  describe('canGoBack()', () => {
+    it('should return false when at beginning of history', () => {
+      const history: History = {
+        boards: [initialBoard],
+        current: 0,
+      };
+      expect(canGoBack(history)).toBe(false);
+    });
+
+    it('should return true when previous states exist', () => {
+      const history: History = {
+        boards: [initialBoard, secondBoard],
+        current: 1,
+      };
+      expect(canGoBack(history)).toBe(true);
+    });
+  });
+
+  describe('canGoForward()', () => {
+    it('should return false when no next states', () => {
+      const history: History = {
+        boards: [initialBoard, null] as (BoardType | null)[],
+        current: 0,
+      };
+      expect(canGoForward(history)).toBe(false);
+    });
+
+    it('should return true when next state exists', () => {
+      const history: History = {
+        boards: [initialBoard, secondBoard, null] as (BoardType | null)[],
+        current: 0,
+      };
+      expect(canGoForward(history)).toBe(true);
+    });
+  });
+
+  describe('addBoard()', () => {
+    it('should add new board and update current index', () => {
+      const history: History = {
+        boards: [initialBoard, secondBoard, null, null] as (BoardType | null)[],
+        current: 1,
+      };
+      const newBoard = thirdBoard;
+      addBoard(history, newBoard);
+      expect(history.current).toBe(2);
+      expect(history.boards[2]).toEqual(newBoard);
+    });
+
+    it('should overwrite existing next states', () => {
+      const history: History = {
+        boards: [initialBoard, secondBoard, thirdBoard, null] as (BoardType | null)[],
+        current: 1,
+      };
+      const newBoard: BoardType = [
+        ['w', null],
+        [null, null],
+      ];
+      addBoard(history, newBoard);
+      expect(history.current).toBe(2);
+      expect(history.boards[2]).toEqual(newBoard);
+      expect(history.boards[3]).toBeNull();
     });
   });
 });

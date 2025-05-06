@@ -14,7 +14,7 @@ export function back(history: History): BoardType {
     throw new Error('No previous board state');
   }
   history.current--;
-  return history.boards[history.current];
+  return history.boards[history.current]!; // Non-null assertion - we maintain array integrity
 }
 
 export function forward(history: History): BoardType {
@@ -22,11 +22,11 @@ export function forward(history: History): BoardType {
     throw new Error('No next board state');
   }
   history.current++;
-  return history.boards[history.current];
+  return history.boards[history.current]!; // Non-null assertion - we maintain array integrity
 }
 
 export function current(history: History): BoardType {
-  return history.boards[history.current];
+  return history.boards[history.current]!; // Non-null assertion - current is always valid
 }
 
 export function canGoBack(history: History): boolean {

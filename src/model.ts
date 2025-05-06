@@ -15,6 +15,6 @@ export type Scores = {
 };
 
 export interface History {
-  boards: BoardType[];
+  boards: (BoardType | null)[];
   current: number;
 }

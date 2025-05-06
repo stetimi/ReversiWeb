@@ -19,7 +19,8 @@ describe('History Management', () => {
   describe('newHistory', () => {
     it('should create new history with initial board state', () => {
       const history = newHistory(initialBoard);
-      expect(history.boards).toEqual([initialBoard]);
+      expect(history.boards[0]).toEqual(initialBoard);
+      expect(history.boards[1]).toBeNull();
       expect(history.current).toBe(0);
     });
   });

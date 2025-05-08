@@ -12,8 +12,8 @@ const App: React.FC = () => {
   const initialBoard = newBoard();
   const [skin, setSkin] = useState(0);
   const [currentPlayer, setCurrentPlayer] = useState<Piece>('b');
-  const playerScores = scores(initialBoard);
   const [history, setHistory] = useState(newHistory(initialBoard));
+  const playerScores = scores(current(history).board);
 
   const handleCellClick = (row: number, col: number) => {
     const board = current(history).board;

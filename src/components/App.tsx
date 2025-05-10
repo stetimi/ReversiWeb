@@ -3,7 +3,7 @@ import Board from './Board';
 import { Controls } from './Controls';
 import { newBoard, position } from '../board';
 import { Piece } from '../model';
-import { applyMove, checkMove, scores } from '../rules';
+import { applyMove, checkMove, scores, calculateMoveState } from '../rules';
 import { back, canGoBack, newHistory, current, addEntry, canGoForward, forward } from '../history';
 
 const SKINS = ['waxy', 'stripy', 'scribble', 'crown', 'realistic'];
@@ -11,12 +11,20 @@ const SKINS = ['waxy', 'stripy', 'scribble', 'crown', 'realistic'];
 const App: React.FC = () => {
   const initialBoard = newBoard();
   const [skin, setSkin] = useState(0);
-  const [currentPlayer, setCurrentPlayer] = useState<Piece>('b');
+  const [currentPlayer, setCurrentPlayer] = useState<Piece | null>('b');
   const [history, setHistory] = useState(newHistory(initialBoard));
   const board = current(history).board;
   const playerScores = scores(board);
+  const moveState = currentPlayer === null ? null : calculateMoveState(board, currentPlayer);
+
+  if (moveState === null) {
+    setCurrentPlayer(null);
+  } else if (moveState.player !== currentPlayer) {
+    setCurrentPlayer(moveState.player);
+  }
 
   const handleCellClick = (row: number, col: number) => {
+    if (currentPlayer === null) return;
     const moveResult = checkMove(board, currentPlayer, position(row, col));
     if (moveResult) {
       const newBoard = applyMove(board, moveResult);
@@ -37,6 +45,7 @@ const App: React.FC = () => {
   };
 
   const highlightOnHover = (row: number, col: number) =>
+    currentPlayer !== null &&
     checkMove(current(history).board, currentPlayer, position(row, col)) !== null;
 
   const onClickBack = () => {
@@ -75,6 +84,14 @@ const App: React.FC = () => {
         canClickBack={canGoBack(history)}
         canClickForward={canGoForward(history)}
       />
+      {currentPlayer === null && (
+        <div className="winner-emblem">
+          <img
+            src={`/assets/winners/${playerScores.black > playerScores.white ? 'black' : 'white'}.png`}
+            alt="Winner emblem"
+          />
+        </div>
+      )}
     </div>
   );
 };

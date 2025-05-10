@@ -4,7 +4,7 @@ import { Player } from './Player';
 
 interface ControlsProps {
   scores: Scores;
-  currentPlayer: Piece;
+  currentPlayer: Piece | null;
   onNewGame: () => void;
   onClickPlayer: () => void;
   onClickBack: () => void;

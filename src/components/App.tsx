@@ -17,11 +17,13 @@ const App: React.FC = () => {
   const playerScores = scores(board);
   const moveState = currentPlayer === null ? null : calculateMoveState(board, currentPlayer);
 
-  if (moveState === null) {
-    setCurrentPlayer(null);
-  } else if (moveState.player !== currentPlayer) {
-    setCurrentPlayer(moveState.player);
-  }
+  React.useEffect(() => {
+    if (moveState === null) {
+      setCurrentPlayer(null);
+    } else if (moveState.player !== currentPlayer) {
+      setCurrentPlayer(moveState.player);
+    }
+  }, [moveState, currentPlayer]);
 
   const handleCellClick = (row: number, col: number) => {
     if (currentPlayer === null) return;

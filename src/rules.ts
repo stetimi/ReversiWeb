@@ -1,4 +1,4 @@
-import { BoardType, Piece, Position, MoveResult, Scores } from './model';
+import { BoardType, Piece, Position, MoveResult, Scores, MoveState } from './model';
 import { cellAt } from './board';
 
 const DIRECTIONS = [
@@ -61,6 +61,21 @@ export function allMoves(board: BoardType, piece: Piece): ReadonlyMap<number, Mo
   }
 
   return moves;
+}
+
+export function calculateMoveState(board: BoardType, currentPlayer: Piece): MoveState | null {
+  const currentMoves = allMoves(board, currentPlayer);
+  if (currentMoves.size > 0) {
+    return { player: currentPlayer, moves: currentMoves };
+  }
+
+  const opponent = currentPlayer === 'b' ? 'w' : 'b';
+  const opponentMoves = allMoves(board, opponent);
+  if (opponentMoves.size > 0) {
+    return { player: opponent, moves: opponentMoves };
+  }
+
+  return null;
 }
 
 export function applyMove(board: BoardType, move: MoveResult): BoardType {

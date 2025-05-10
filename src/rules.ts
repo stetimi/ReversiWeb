@@ -50,7 +50,7 @@ export function checkMove(board: BoardType, piece: Piece, position: Position): M
   return flipped.length > 0 ? { position, piece, flipped } : null;
 }
 
-export function allMoves(board: BoardType, piece: Piece): Map<number, MoveResult> {
+export function allMoves(board: BoardType, piece: Piece): ReadonlyMap<number, MoveResult> {
   const moves = new Map<number, MoveResult>();
 
   for (let pos = 0; pos < 64; pos++) {

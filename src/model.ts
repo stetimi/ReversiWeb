@@ -23,3 +23,8 @@ export interface History {
   readonly entries: ReadonlyArray<HistoryEntry | null>;
   readonly current: number;
 }
+
+export interface MoveState {
+  readonly player: Piece;
+  readonly moves: ReadonlyMap<number, MoveResult>;
+}

@@ -13,10 +13,10 @@ const App: React.FC = () => {
   const [skin, setSkin] = useState(0);
   const [currentPlayer, setCurrentPlayer] = useState<Piece>('b');
   const [history, setHistory] = useState(newHistory(initialBoard));
-  const playerScores = scores(current(history).board);
+  const board = current(history).board;
+  const playerScores = scores(board);
 
   const handleCellClick = (row: number, col: number) => {
-    const board = current(history).board;
     const moveResult = checkMove(board, currentPlayer, position(row, col));
     if (moveResult) {
       const newBoard = applyMove(board, moveResult);

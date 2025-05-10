@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { Player } from '../../src/components/Player';
-import type { PlayerProps } from '../../src/components/Player';
+import { Player } from '@components/Player';
+import type { PlayerProps } from '@components/Player';
 
 describe('Player Component', () => {
   const mockProps: PlayerProps = {

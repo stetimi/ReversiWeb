@@ -8,6 +8,7 @@ module.exports = {
   testMatch: ['**/test/**/*.test.(ts|tsx)'],
   moduleNameMapper: {
     '^.+\\.(scss)$': 'identity-obj-proxy',
+    '^@components/(.*)$': '<rootDir>/src/components/$1',
   },
   setupFilesAfterEnv: ['@testing-library/jest-dom'],
 };

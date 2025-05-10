@@ -1,4 +1,4 @@
-import { checkMove, applyMove, scores } from '../src/rules';
+import { checkMove, applyMove, scores, allMoves } from '../src/rules';
 import { BoardType, MoveResult, Piece } from '../src/model';
 import { newBoard, position } from '../src/board';
 import { parseBoard } from '../src/BoardReader';
@@ -149,5 +149,43 @@ describe('scores', () => {
     const result = scores(board);
     expect(result.black).toBe(32);
     expect(result.white).toBe(32);
+  });
+});
+
+describe('allMoves', () => {
+  test('should find all valid moves for player', () => {
+    const board = parseBoard([
+      '........',
+      '........',
+      '........',
+      '...bw...',
+      '...wb...',
+      '........',
+      '........',
+      '........',
+    ]);
+
+    const moves = Array.from(allMoves(board, 'w').keys()) as number[];
+    expect(numberSort(moves)).toEqual([
+      position(2, 3),
+      position(3, 2),
+      position(4, 5),
+      position(5, 4),
+    ]);
+  });
+
+  test('should return empty when no moves available', () => {
+    const fullBoard = parseBoard([
+      'bbbbbbbb',
+      'bbbbbbbb',
+      'bbbbbbbb',
+      'bbbbbbbb',
+      'bbbbbbbb',
+      'bbbbbbbb',
+      'bbbbbbbb',
+      'bbbbbbbb',
+    ]);
+
+    expect(allMoves(fullBoard, 'b').size).toBe(0);
   });
 });

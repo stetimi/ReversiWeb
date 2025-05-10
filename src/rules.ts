@@ -50,6 +50,19 @@ export function checkMove(board: BoardType, piece: Piece, position: Position): M
   return flipped.length > 0 ? { position, piece, flipped } : null;
 }
 
+export function allMoves(board: BoardType, piece: Piece): Map<number, MoveResult> {
+  const moves = new Map<number, MoveResult>();
+
+  for (let pos = 0; pos < 64; pos++) {
+    const result = checkMove(board, piece, pos);
+    if (result) {
+      moves.set(pos, result);
+    }
+  }
+
+  return moves;
+}
+
 export function applyMove(board: BoardType, move: MoveResult): BoardType {
   // Create deep copy of board
   const newBoard = board.map((row) => [...row]);

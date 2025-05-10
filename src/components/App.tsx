@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Board from './Board';
 import { Controls } from './Controls';
 import { newBoard, position } from '../board';
@@ -24,6 +24,13 @@ const App: React.FC = () => {
       setCurrentPlayer(moveState.player);
     }
   }, [moveState, currentPlayer]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('editMode') === 'true') {
+      console.log('Edit mode activated');
+    }
+  }, []);
 
   const handleCellClick = (row: number, col: number) => {
     if (currentPlayer === null) return;

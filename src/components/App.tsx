@@ -9,10 +9,14 @@ import { back, canGoBack, newHistory, current, addEntry, canGoForward, forward }
 const SKINS = ['waxy', 'stripy', 'scribble', 'crown', 'realistic'];
 
 const App: React.FC = () => {
-  const initialBoard = newBoard();
+  const [initialBoard] = useState(() => {
+    const savedBoard = localStorage.getItem('editedBoard');
+    return savedBoard ? JSON.parse(savedBoard) : newBoard();
+  });
   const [skin, setSkin] = useState(0);
   const [currentPlayer, setCurrentPlayer] = useState<Piece | null>('b');
   const [history, setHistory] = useState(newHistory(initialBoard));
+  const [isEditMode, setIsEditMode] = useState(false);
   const board = current(history).board;
   const playerScores = scores(board);
   const moveState = currentPlayer === null ? null : calculateMoveState(board, currentPlayer);
@@ -27,20 +31,37 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get('editMode') === 'true') {
+    const editModeActive = params.get('editMode') === 'true';
+    setIsEditMode(editModeActive);
+    if (editModeActive) {
       console.log('Edit mode activated');
     }
   }, []);
 
   const handleCellClick = (row: number, col: number) => {
-    if (currentPlayer === null) return;
-    const moveResult = checkMove(board, currentPlayer, position(row, col));
-    if (moveResult) {
-      const newBoard = applyMove(board, moveResult);
-      const nextPlayer = currentPlayer === 'b' ? 'w' : 'b';
-      setCurrentPlayer(nextPlayer);
-      const updatedHistory = addEntry(history, { board: newBoard, player: nextPlayer });
+    if (isEditMode) {
+      const newBoard = board.map((r) => [...r]);
+      const currentPiece = newBoard[row][col];
+      let newPiece: Piece | null = null;
+      if (currentPiece === null) {
+        newPiece = 'b';
+      } else if (currentPiece === 'b') {
+        newPiece = 'w';
+      }
+      newBoard[row][col] = newPiece;
+      const updatedHistory = addEntry(history, { board: newBoard, player: currentPlayer || 'b' });
       setHistory(updatedHistory);
+      localStorage.setItem('editedBoard', JSON.stringify(newBoard));
+    } else {
+      if (currentPlayer === null) return;
+      const moveResult = checkMove(board, currentPlayer, position(row, col));
+      if (moveResult) {
+        const newBoard = applyMove(board, moveResult);
+        const nextPlayer = currentPlayer === 'b' ? 'w' : 'b';
+        setCurrentPlayer(nextPlayer);
+        const updatedHistory = addEntry(history, { board: newBoard, player: nextPlayer });
+        setHistory(updatedHistory);
+      }
     }
   };
 
@@ -49,8 +70,9 @@ const App: React.FC = () => {
   };
 
   const newGame = () => {
+    localStorage.removeItem('editedBoard');
     setCurrentPlayer('b');
-    setHistory(newHistory(initialBoard));
+    setHistory(newHistory(newBoard()));
   };
 
   const highlightOnHover = (row: number, col: number) =>

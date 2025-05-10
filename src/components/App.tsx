@@ -6,7 +6,7 @@ import { Piece } from '../model';
 import { applyMove, checkMove, scores } from '../rules';
 import { back, canGoBack, newHistory, current, addEntry, canGoForward, forward } from '../history';
 
-const SKINS = ['waxy', 'stripy', 'scribble', 'crown'];
+const SKINS = ['waxy', 'stripy', 'scribble', 'crown', 'realistic'];
 
 const App: React.FC = () => {
   const initialBoard = newBoard();

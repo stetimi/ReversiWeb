@@ -38,20 +38,24 @@ const App: React.FC = () => {
     }
   }, []);
 
+  const handleEditModeClick = (row: number, col: number) => {
+    const newBoard = board.map((r) => [...r]);
+    const currentPiece = newBoard[row][col];
+    let newPiece: Piece | null = null;
+    if (currentPiece === null) {
+      newPiece = 'b';
+    } else if (currentPiece === 'b') {
+      newPiece = 'w';
+    }
+    newBoard[row][col] = newPiece;
+    const updatedHistory = addEntry(history, { board: newBoard, player: currentPlayer || 'b' });
+    setHistory(updatedHistory);
+    localStorage.setItem('editedBoard', JSON.stringify(newBoard));
+  };
+
   const handleCellClick = (row: number, col: number) => {
     if (isEditMode) {
-      const newBoard = board.map((r) => [...r]);
-      const currentPiece = newBoard[row][col];
-      let newPiece: Piece | null = null;
-      if (currentPiece === null) {
-        newPiece = 'b';
-      } else if (currentPiece === 'b') {
-        newPiece = 'w';
-      }
-      newBoard[row][col] = newPiece;
-      const updatedHistory = addEntry(history, { board: newBoard, player: currentPlayer || 'b' });
-      setHistory(updatedHistory);
-      localStorage.setItem('editedBoard', JSON.stringify(newBoard));
+      handleEditModeClick(row, col);
     } else {
       if (currentPlayer === null) return;
       const moveResult = checkMove(board, currentPlayer, position(row, col));

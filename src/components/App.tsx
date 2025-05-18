@@ -5,6 +5,7 @@ import { newBoard, position } from '../board';
 import { Piece } from '../model';
 import { applyMove, checkMove, scores, calculateMoveState } from '../rules';
 import { back, canGoBack, newHistory, current, addEntry, canGoForward, forward } from '../history';
+import { handleEditModeClick } from '../actions';
 
 const SKINS = ['waxy', 'stripy', 'scribble', 'crown', 'realistic'];
 
@@ -38,34 +39,23 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleEditModeClick = (row: number, col: number) => {
-    const newBoard = board.map((r) => [...r]);
-    const currentPiece = newBoard[row][col];
-    let newPiece: Piece | null = null;
-    if (currentPiece === null) {
-      newPiece = 'b';
-    } else if (currentPiece === 'b') {
-      newPiece = 'w';
+  const handlePlayClick = (row: number, col: number, currentPlayer: Piece | null) => {
+    if (currentPlayer === null) return;
+    const moveResult = checkMove(board, currentPlayer, position(row, col));
+    if (moveResult) {
+      const newBoard = applyMove(board, moveResult);
+      const nextPlayer = currentPlayer === 'b' ? 'w' : 'b';
+      setCurrentPlayer(nextPlayer);
+      const updatedHistory = addEntry(history, { board: newBoard, player: nextPlayer });
+      setHistory(updatedHistory);
     }
-    newBoard[row][col] = newPiece;
-    const updatedHistory = addEntry(history, { board: newBoard, player: currentPlayer || 'b' });
-    setHistory(updatedHistory);
-    localStorage.setItem('editedBoard', JSON.stringify(newBoard));
   };
 
   const handleCellClick = (row: number, col: number) => {
     if (isEditMode) {
-      handleEditModeClick(row, col);
+      handleEditModeClick(board, row, col, currentPlayer || 'b', history, setHistory);
     } else {
-      if (currentPlayer === null) return;
-      const moveResult = checkMove(board, currentPlayer, position(row, col));
-      if (moveResult) {
-        const newBoard = applyMove(board, moveResult);
-        const nextPlayer = currentPlayer === 'b' ? 'w' : 'b';
-        setCurrentPlayer(nextPlayer);
-        const updatedHistory = addEntry(history, { board: newBoard, player: nextPlayer });
-        setHistory(updatedHistory);
-      }
+      handlePlayClick(row, col, currentPlayer || 'b');
     }
   };
 

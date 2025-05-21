@@ -1,7 +1,7 @@
-import { calculateHeuristic } from '../src/heuristic';
+import { evaluateBoard } from '../src/heuristic';
 import { BoardType } from '../src/model';
 
-describe('calculateHeuristic', () => {
+describe('evaluateBoard', () => {
   const emptyBoard: BoardType = Array(8)
     .fill(null)
     .map(() => Array(8).fill(null));
@@ -14,7 +14,7 @@ describe('calculateHeuristic', () => {
     board[7][0] = 'b';
     board[7][7] = 'b';
 
-    const score = calculateHeuristic(board, 'b');
+    const score = evaluateBoard(board, 'b');
     expect(score).toBeGreaterThan(0.4 * 0.9); // At least 90% of corner weight
   });
 
@@ -28,8 +28,8 @@ describe('calculateHeuristic', () => {
     board[2][4] = 'w';
     board[4][2] = 'w';
 
-    const playerScore = calculateHeuristic(board, 'b');
-    const opponentScore = calculateHeuristic(board, 'w');
+    const playerScore = evaluateBoard(board, 'b');
+    const opponentScore = evaluateBoard(board, 'w');
     expect(playerScore).toBeGreaterThan(opponentScore);
   });
 
@@ -42,7 +42,7 @@ describe('calculateHeuristic', () => {
       }
     }
 
-    const score = calculateHeuristic(board, 'b');
+    const score = evaluateBoard(board, 'b');
     expect(score).toBeGreaterThan(0.15); // Coin parity should dominate
   });
 
@@ -56,7 +56,7 @@ describe('calculateHeuristic', () => {
     board[0][2] = 'b';
     board[2][0] = 'b';
 
-    const score = calculateHeuristic(board, 'b');
+    const score = evaluateBoard(board, 'b');
     expect(score).toBeLessThan(0.15); // Adjusted for new corner penalty calculation
   });
 
@@ -70,7 +70,7 @@ describe('calculateHeuristic', () => {
       board[i][7] = 'b';
     }
 
-    const score = calculateHeuristic(board, 'b');
+    const score = evaluateBoard(board, 'b');
     expect(score).toBeGreaterThan(0.15); // Increased expectation with stability weight change
   });
 });

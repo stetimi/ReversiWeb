@@ -8,7 +8,7 @@ const WEIGHTS = {
   stability: 0.2,
 };
 
-export function calculateHeuristic(board: BoardType, player: Piece): number {
+export function evaluateBoard(board: BoardType, player: Piece): number {
   const opponent = player === 'b' ? 'w' : 'b';
 
   // Coin parity calculation

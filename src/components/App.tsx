@@ -40,6 +40,9 @@ const App: React.FC = () => {
   }, []);
 
   const handleCellClick = (row: number, col: number) => {
+    // Only allow human (black) to click when it's their turn
+    if (currentPlayer !== 'b') return;
+
     if (isEditMode) {
       const board = cycleBoardCell(current(history).board, row, col);
       storeEditedBoard(board, currentPlayer || 'b', history, setHistory);

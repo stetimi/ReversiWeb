@@ -5,7 +5,7 @@ import { newBoard, position } from '../board';
 import { Piece } from '../model';
 import { applyMove, checkMove, scores, calculateMoveState } from '../rules';
 import { back, canGoBack, newHistory, current, addEntry, canGoForward, forward } from '../history';
-import { handleEditModeClick } from '../actions';
+import { cycleBoardCell, storeEditedBoard } from '../actions';
 
 const SKINS = ['waxy', 'stripy', 'scribble', 'crown', 'realistic'];
 
@@ -53,7 +53,8 @@ const App: React.FC = () => {
 
   const handleCellClick = (row: number, col: number) => {
     if (isEditMode) {
-      handleEditModeClick(board, row, col, currentPlayer || 'b', history, setHistory);
+      const board = cycleBoardCell(current(history).board, row, col);
+      storeEditedBoard(board, currentPlayer || 'b', history, setHistory);
     } else {
       handlePlayClick(row, col, currentPlayer || 'b');
     }

@@ -1,4 +1,4 @@
-import { BoardType, History, HistoryEntry, Piece } from './model';
+import { BoardType, History, HistoryEntry } from './model';
 
 export function newHistory(board: BoardType): History {
   const entries = Array(65).fill(null);

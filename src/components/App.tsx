@@ -3,9 +3,9 @@ import Board from './Board';
 import { Controls } from './Controls';
 import { newBoard, position } from '../board';
 import { Piece } from '../model';
-import { applyMove, checkMove, scores, calculateMoveState } from '../rules';
+import { checkMove, scores, calculateMoveState } from '../rules';
 import { back, canGoBack, newHistory, current, addEntry, canGoForward, forward } from '../history';
-import { cycleBoardCell, storeEditedBoard } from '../actions';
+import { cycleBoardCell, storeEditedBoard, handlePlayClick } from '../actions';
 
 const SKINS = ['waxy', 'stripy', 'scribble', 'crown', 'realistic'];
 
@@ -39,24 +39,20 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handlePlayClick = (row: number, col: number, currentPlayer: Piece | null) => {
-    if (currentPlayer === null) return;
-    const moveResult = checkMove(board, currentPlayer, position(row, col));
-    if (moveResult) {
-      const newBoard = applyMove(board, moveResult);
-      const nextPlayer = currentPlayer === 'b' ? 'w' : 'b';
-      setCurrentPlayer(nextPlayer);
-      const updatedHistory = addEntry(history, { board: newBoard, player: nextPlayer });
-      setHistory(updatedHistory);
-    }
-  };
-
   const handleCellClick = (row: number, col: number) => {
     if (isEditMode) {
       const board = cycleBoardCell(current(history).board, row, col);
       storeEditedBoard(board, currentPlayer || 'b', history, setHistory);
     } else {
-      handlePlayClick(row, col, currentPlayer || 'b');
+      const result = handlePlayClick(
+        current(history).board,
+        currentPlayer || 'b',
+        row,
+        col,
+        history,
+      );
+      setCurrentPlayer(result.nextPlayer);
+      setHistory(result.newHistory);
     }
   };
 

@@ -11,6 +11,15 @@ interface CellProps {
 
 const Cell: React.FC<CellProps> = ({ key, cell, skin, onCellClick, highlightOnHover }) => {
   const [hoveredCell, setHoveredCell] = React.useState<boolean>(false);
+  const [isNew, setIsNew] = React.useState(false);
+
+  React.useEffect(() => {
+    if (cell !== null) {
+      setIsNew(true);
+      const timer = setTimeout(() => setIsNew(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [cell]);
   const showHighlight = () => {
     if (hoveredCell && highlightOnHover) {
       return 'hovered';
@@ -41,7 +50,7 @@ const Cell: React.FC<CellProps> = ({ key, cell, skin, onCellClick, highlightOnHo
       onClick={() => onCellClick()}
       onMouseEnter={() => setHoveredCell(true)}
       onMouseLeave={() => setHoveredCell(false)}
-      className={`board-cell ${showHighlight()}`}
+      className={`board-cell ${showHighlight()} ${isNew ? 'new-piece' : ''}`}
     >
       {cellDiv(cell)}
     </div>

@@ -2,23 +2,28 @@ import React from 'react';
 import { CellType } from '../model';
 
 interface CellProps {
-  key: number;
   cell: CellType;
   skin: string;
   onCellClick: () => void;
   highlightOnHover: boolean;
 }
 
-const Cell: React.FC<CellProps> = ({ key, cell, skin, onCellClick, highlightOnHover }) => {
+const Cell: React.FC<CellProps> = ({ cell, skin, onCellClick, highlightOnHover }) => {
   const [hoveredCell, setHoveredCell] = React.useState<boolean>(false);
   const [isNew, setIsNew] = React.useState(false);
+  const [wasFlipped, setWasFlipped] = React.useState(false);
+  const prevCellRef = React.useRef<CellType>(null);
 
   React.useEffect(() => {
-    if (cell !== null) {
+    if (cell !== null && prevCellRef.current === null) {
       setIsNew(true);
-      const timer = setTimeout(() => setIsNew(false), 300);
-      return () => clearTimeout(timer);
+      setTimeout(() => setIsNew(false), 300);
     }
+    if (cell !== prevCellRef.current && prevCellRef.current !== null) {
+      setWasFlipped(true);
+      setTimeout(() => setWasFlipped(false), 300);
+    }
+    prevCellRef.current = cell;
   }, [cell]);
   const showHighlight = () => {
     if (hoveredCell && highlightOnHover) {
@@ -46,11 +51,10 @@ const Cell: React.FC<CellProps> = ({ key, cell, skin, onCellClick, highlightOnHo
   };
   return (
     <div
-      key={key}
       onClick={() => onCellClick()}
       onMouseEnter={() => setHoveredCell(true)}
       onMouseLeave={() => setHoveredCell(false)}
-      className={`board-cell ${showHighlight()} ${isNew ? 'new-piece' : ''}`}
+      className={`board-cell ${showHighlight()} ${isNew ? 'new-piece' : ''} ${wasFlipped ? 'flipped-piece' : ''}`}
     >
       {cellDiv(cell)}
     </div>

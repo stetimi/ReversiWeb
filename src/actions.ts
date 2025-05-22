@@ -1,6 +1,6 @@
 import { BoardType, History, Piece } from './model';
 import { addEntry } from './history';
-import { checkMove, applyMove } from './rules';
+import { checkMove, applyMove, calculateMoveState } from './rules';
 import { position } from './board';
 
 export const storeEditedBoard = (
@@ -56,8 +56,12 @@ export const handlePlayClick = async (
   const moveResult = checkMove(board, currentPlayer, position(row, col));
   if (moveResult) {
     const newBoard = applyMove(board, moveResult);
-    const nextPlayer = currentPlayer === 'b' ? 'w' : 'b';
-    const updatedHistory = addEntry(history, { board: newBoard, player: nextPlayer });
+    const moveState = calculateMoveState(newBoard, currentPlayer === 'b' ? 'w' : 'b');
+    const nextPlayer = moveState?.player || null;
+    const updatedHistory = addEntry(history, {
+      board: newBoard,
+      player: moveState?.player || currentPlayer,
+    });
 
     // If next player is computer (white), make automatic move
     if (nextPlayer === 'w') {

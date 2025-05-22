@@ -39,7 +39,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleCellClick = (row: number, col: number) => {
+  const handleCellClick = async (row: number, col: number) => {
     // Only allow human (black) to click when it's their turn
     if (currentPlayer !== 'b') return;
 
@@ -47,7 +47,7 @@ const App: React.FC = () => {
       const board = cycleBoardCell(current(history).board, row, col);
       storeEditedBoard(board, currentPlayer || 'b', history, setHistory);
     } else {
-      const result = handlePlayClick(
+      const result = await handlePlayClick(
         current(history).board,
         currentPlayer || 'b',
         row,

@@ -46,13 +46,13 @@ const computerMove = (
   return { newHistory: history, nextPlayer: null };
 };
 
-export const handlePlayClick = (
+export const handlePlayClick = async (
   board: BoardType,
   currentPlayer: Piece,
   row: number,
   col: number,
   history: History,
-): { newHistory: History; nextPlayer: Piece | null } => {
+): Promise<{ newHistory: History; nextPlayer: Piece | null }> => {
   const moveResult = checkMove(board, currentPlayer, position(row, col));
   if (moveResult) {
     const newBoard = applyMove(board, moveResult);
@@ -61,6 +61,7 @@ export const handlePlayClick = (
 
     // If next player is computer (white), make automatic move
     if (nextPlayer === 'w') {
+      await new Promise((resolve) => setTimeout(resolve, 300));
       return computerMove(newBoard, updatedHistory);
     }
     return { newHistory: updatedHistory, nextPlayer };
